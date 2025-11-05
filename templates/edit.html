@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Edit Task{% endblock %}
+
+{% block content %}
+<section class="card">
+  <h2>Edit task</h2>
+  <form action="{{ url_for('edit_task', task_id=str(task._id)) }}" method="post" enctype="multipart/form-data" class="form">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" name="title" required maxlength="200" value="{{ task.title }}">
+    </div>
+    <div class="field">
+      <label>Description</label>
+      <textarea name="description" rows="3">{{ task.description }}</textarea>
+    </div>
+    <div class="field">
+      <label>Replace image (optional)</label>
+      <input type="file" name="image" accept="image/*">
+      {% if task.image_url %}
+        <p>Current image:</p>
+        <img src="{{ task.image_url }}" alt="current" style="max-width:200px;">
+      {% endif %}
+    </div>
+    <div class="field">
+      <button type="submit">Save</button>
+      <a href="{{ url_for('index') }}" class="muted">Cancel</a>
+    </div>
+  </form>
+</section>
+{% endblock %}

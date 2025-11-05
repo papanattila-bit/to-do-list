@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}My To-Do List{% endblock %}
+
+{% block content %}
+<section class="card">
+  <h2>Add a new task</h2>
+  <form action="{{ url_for('add_task') }}" method="post" enctype="multipart/form-data" class="form">
+    <div class="field">
+      <label>Title</label>
+      <input type="text" name="title" required maxlength="200" placeholder="Buy milk">
+    </div>
+    <div class="field">
+      <label>Description <small>(optional)</small></label>
+      <textarea name="description" rows="2" placeholder="Extra notes..."></textarea>
+    </div>
+    <div class="field">
+      <label>Image <small>(optional)</small></label>
+      <input type="file" name="image" accept="image/*">
+    </div>
+    <div class="field">
+      <button type="submit">Add task</button>
+    </div>
+  </form>
+</section>
+
+<section class="card">
+  <h2>Your Tasks</h2>
+  {% if not todos %}
+    <p>No tasks yet.</p>
+  {% else %}
+    <ul class="tasks">
+      {% for t in todos %}
+        <li class="task">
+          <div class="task-body">
+            <h3>{{ t.title }}</h3>
+            {% if t.description %}
+              <p>{{ t.description }}</p>
+            {% endif %}
+            {% if t.image_url %}
+              <div class="thumb">
+                <img src="{{ t.image_url }}" alt="task image" style="max-width:200px;">
+              </div>
+            {% endif %}
+            <div class="meta">
+              <form action="{{ url_for('delete_task', task_id=str(t._id)) }}" method="post" style="display:inline;">
+                <button class="danger small" type="submit">Delete</button>
+              </form>
+              <a class="small" href="{{ url_for('edit_task', task_id=str(t._id)) }}">Edit</a>
+            </div>
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</section>
+{% endblock %}
