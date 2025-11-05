@@ -54,7 +54,7 @@ def _strid(oid):
 
 @app.route('/')
 def index():
-    todos = db.todos.find()
+    todos = list(tasks_col.find())
     todos = [{**t, "_id": str(t["_id"])} for t in todos]  # convert ObjectId to string
     return render_template("index.html", todos=todos)
 
