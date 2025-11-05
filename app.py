@@ -52,14 +52,10 @@ def _strid(oid):
     except Exception:
         return oid
 
-@app.route("/")
+@app.route('/')
 def index():
-    tasks = db.tasks.find()
-    # Convert ObjectIds to strings before rendering
-    todos = []
-    for t in tasks:
-        t["_id"] = str(t["_id"])
-        todos.append(t)
+    todos = db.todos.find()
+    todos = [{**t, "_id": str(t["_id"])} for t in todos]  # convert ObjectId to string
     return render_template("index.html", todos=todos)
 
 

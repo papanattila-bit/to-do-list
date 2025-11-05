@@ -4,7 +4,7 @@
 {% block content %}
 <section class="card">
   <h2>Edit task</h2>
-  <form action="{{ url_for('edit_task', task_id=str(task._id)) }}" method="post" enctype="multipart/form-data" class="form">
+  <form action="{{ url_for('edit_task', task_id=task._id) }}" method="post" enctype="multipart/form-data" class="form">
     <div class="field">
       <label>Title</label>
       <input type="text" name="title" required maxlength="200" value="{{ task.title }}">

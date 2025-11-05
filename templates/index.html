@@ -42,10 +42,10 @@
               </div>
             {% endif %}
             <div class="meta">
-              <form action="{{ url_for('delete_task', task_id=str(t._id)) }}" method="post" style="display:inline;">
+              <form action="{{ url_for('delete_task', task_id=t._id) }}" method="post" style="display:inline;">
                 <button class="danger small" type="submit">Delete</button>
               </form>
-              <a class="small" href="{{ url_for('edit_task', task_id=str(t._id)) }}">Edit</a>
+              <a class="small" href="{{ url_for('edit_task', task_id=t._id) }}">Edit</a>
             </div>
           </div>
         </li>
