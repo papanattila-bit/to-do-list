@@ -54,9 +54,14 @@ def _strid(oid):
 
 @app.route("/")
 def index():
-    # Fetch tasks (sorted newest first)
-    tasks = list(tasks_col.find().sort("_id", -1))
-    return render_template("index.html", todos=tasks)
+    tasks = db.tasks.find()
+    # Convert ObjectIds to strings before rendering
+    todos = []
+    for t in tasks:
+        t["_id"] = str(t["_id"])
+        todos.append(t)
+    return render_template("index.html", todos=todos)
+
 
 @app.route("/add", methods=["POST"])
 def add_task():
